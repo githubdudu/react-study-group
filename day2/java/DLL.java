@@ -14,8 +14,8 @@ public class DLL implements List {
 
         public Node(int value, Node prev, Node next) {
             this.value = value;
-            this.prev = null;
-            this.next = null;
+            this.prev = prev;
+            this.next = next;
         }
 
 
