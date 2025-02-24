@@ -35,10 +35,7 @@ class DLL {
     }
 
     addLast(value) {
-        const newNode = new Node(value, this.sentinel.prev, this.sentinel);
-        this.sentinel.prev.next = newNode;
-        this.sentinel.prev = newNode;
-        this.size++;
+        // TODO
     }
 
     get(index) {
@@ -59,7 +56,7 @@ class DLL {
     }
 
     getLast() {
-        return this.sentinel.prev.value;
+        // TODO
     }
 
     remove(index) {
@@ -83,11 +80,7 @@ class DLL {
     }
 
     removeLast() {
-        const lastNode = this.sentinel.prev;
-        lastNode.prev.next = this.sentinel;
-        this.sentinel.prev = lastNode.prev;
-        this.size--;
-        return lastNode.value;
+        // TODO
     }
 
     size() {
