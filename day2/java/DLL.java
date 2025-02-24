@@ -59,6 +59,7 @@ public class DLL implements List {
     @Override
     public void addLast(int value) {
         // TODO: make this method as efficient as possible
+        add(size, value);
     }
 
     @Override
@@ -83,7 +84,7 @@ public class DLL implements List {
     @Override
     public int getLast() {
         // TODO: This is not efficient, rewrite this and make it efficient
-        return get(size - 1);
+        return sentinel.prev.value;
     }
 
     @Override
@@ -113,7 +114,14 @@ public class DLL implements List {
     @Override
     public int removeLast() {
         // TODO: This is not efficient, rewrite this and make it efficient
-        return remove(size - 1);
+        Node lastNode = sentinel.prev;
+        int removedValue = lastNode.value;
+
+        lastNode.prev.next = sentinel;
+        sentinel.prev = lastNode.prev;
+        size--;
+
+        return removedValue;
     }
 
     @Override
@@ -129,12 +137,22 @@ public class DLL implements List {
     @Override
     public int indexOf(int value) {
         // TODO: Implement this method
+        for (int i = 0; i < size; i++) {
+            if (get(i) == value) {
+                return i;
+            }
+        }
         return -1;
     }
 
     @Override
     public boolean contains(int value) {
         // TODO: Implement this method
+        for (int i = 0; i < size; i++) {
+            if (get(i) == value) {
+                return true;
+            }
+        }
         return false;
     }
 
