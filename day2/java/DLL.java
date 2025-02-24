@@ -82,7 +82,7 @@ public class DLL implements List {
 
     @Override
     public int getLast() {
-        // This is not efficient, rewrite this and make it efficient
+        // TODO: This is not efficient, rewrite this and make it efficient
         return get(size - 1);
     }
 
@@ -112,7 +112,7 @@ public class DLL implements List {
 
     @Override
     public int removeLast() {
-        // This is not efficient, rewrite this and make it efficient
+        // TODO: This is not efficient, rewrite this and make it efficient
         return remove(size - 1);
     }
 
