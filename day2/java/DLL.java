@@ -137,4 +137,63 @@ public class DLL implements List {
         // TODO: Implement this method
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        Node current = sentinel.next;
+        while (current != sentinel) {
+            sb.append(current.value);
+            if (current.next != sentinel) {
+                sb.append(", ");
+            }
+            current = current.next;
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    // Helper method to convert an array to a DLL
+    public static DLL ArrayToDLL(int[] arr) {
+        DLL dll = new DLL();
+        for (int i = 0; i < arr.length; i++) {
+            dll.addLast(arr[i]);
+        }
+        return dll;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5};
+        DLL dll = ArrayToDLL(arr);
+        System.out.println(dll);
+
+        System.out.println(dll.size());
+        System.out.println(dll.isEmpty());
+
+        System.out.println(dll.indexOf(3));
+        System.out.println(dll.contains(3));
+        System.out.println(dll.indexOf(10));
+        System.out.println(dll.contains(10));
+
+        dll.add(2, 10);
+        System.out.println(dll);
+
+        dll.addFirst(20);
+        System.out.println(dll);
+
+        dll.addLast(30);
+        System.out.println(dll);
+
+        System.out.println(dll.get(2));
+        System.out.println(dll.getFirst());
+        System.out.println(dll.getLast());
+
+        System.out.println(dll.remove(2));
+        System.out.println(dll);
+        System.out.println(dll.removeFirst());
+        System.out.println(dll);
+        System.out.println(dll.removeLast());
+        System.out.println(dll);
+    }
 }
