@@ -1,11 +1,13 @@
 package day2.java;
 
+import java.util.NoSuchElementException;
+
 /*
  * Double Linked List
  */
 public class DLL implements List {
     private int size;
-
+    private Node tail;
 
     private class Node {
         public int value;
@@ -17,7 +19,6 @@ public class DLL implements List {
             this.prev = prev;
             this.next = next;
         }
-
 
         public Node() {
             this(0, null, null);
@@ -31,10 +32,11 @@ public class DLL implements List {
     public DLL() {
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
+        tail = sentinel;
         size = 0;
     }
 
-        @Override
+    @Override
     public void add(int index, int value) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
@@ -59,6 +61,13 @@ public class DLL implements List {
     @Override
     public void addLast(int value) {
         // TODO: make this method as efficient as possible
+        // EXPLANATION: instead of using add() which goes through for i loop from 0, I
+        // utilized the "tail" for DLL's advantage in traversing the nodes.
+        Node newNode = new Node(value, tail, sentinel);
+        sentinel.prev = newNode;
+        tail.next = newNode;
+        tail = newNode;
+        size++;
     }
 
     @Override
@@ -83,7 +92,12 @@ public class DLL implements List {
     @Override
     public int getLast() {
         // TODO: This is not efficient, rewrite this and make it efficient
-        return get(size - 1);
+        // EXPLANATION: again, I'm utilizing tail and tail.value to speed up the
+        // runtime.
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty");
+        }
+        return tail.value;
     }
 
     @Override
@@ -108,12 +122,20 @@ public class DLL implements List {
     public int removeFirst() {
         return remove(0);
     }
-        
 
     @Override
     public int removeLast() {
         // TODO: This is not efficient, rewrite this and make it efficient
-        return remove(size - 1);
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty");
+        }
+
+        int removedValue = tail.value;
+        tail = tail.prev;
+        tail.next = sentinel;
+        sentinel.prev = tail;
+        size--;
+        return removedValue;
     }
 
     @Override
@@ -129,12 +151,34 @@ public class DLL implements List {
     @Override
     public int indexOf(int value) {
         // TODO: Implement this method
+
+        Node current = sentinel.next;
+        int index = 0;
+
+        while (current != sentinel) {
+            if (current.value == value) {
+                return index;
+            }
+            current = current.next;
+            index++;
+        }
+
         return -1;
     }
 
     @Override
     public boolean contains(int value) {
         // TODO: Implement this method
+
+        Node current = sentinel.next;
+
+        while (current != sentinel) {
+            if (current.value == value) {
+                return true;
+            }
+            current = current.next;
+        }
+
         return false;
     }
 
@@ -164,7 +208,7 @@ public class DLL implements List {
     }
 
     public static void main(String[] args) {
-        int[] arr = {1, 2, 3, 4, 5};
+        int[] arr = { 1, 2, 3, 4, 5 };
         DLL dll = ArrayToDLL(arr);
         System.out.println(dll);
 
