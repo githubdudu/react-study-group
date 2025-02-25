@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
  */
 public class DLL implements List {
     private int size;
-    private Node tail;
 
     private class Node {
         public int value;
@@ -32,7 +31,6 @@ public class DLL implements List {
     public DLL() {
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
-        tail = sentinel;
         size = 0;
     }
 
@@ -61,12 +59,9 @@ public class DLL implements List {
     @Override
     public void addLast(int value) {
         // TODO: make this method as efficient as possible
-        // EXPLANATION: instead of using add() which goes through for i loop from 0, I
-        // utilized the "tail" for DLL's advantage in traversing the nodes.
-        Node newNode = new Node(value, tail, sentinel);
+        Node newNode = new Node(value, sentinel.prev, sentinel);
+        sentinel.prev.next = newNode;
         sentinel.prev = newNode;
-        tail.next = newNode;
-        tail = newNode;
         size++;
     }
 
@@ -92,12 +87,10 @@ public class DLL implements List {
     @Override
     public int getLast() {
         // TODO: This is not efficient, rewrite this and make it efficient
-        // EXPLANATION: again, I'm utilizing tail and tail.value to speed up the
-        // runtime.
         if (isEmpty()) {
             throw new NoSuchElementException("List is empty");
         }
-        return tail.value;
+        return sentinel.prev.value;
     }
 
     @Override
@@ -130,10 +123,9 @@ public class DLL implements List {
             throw new NoSuchElementException("List is empty");
         }
 
-        int removedValue = tail.value;
-        tail = tail.prev;
-        tail.next = sentinel;
-        sentinel.prev = tail;
+        int removedValue = sentinel.prev.value;
+        sentinel.prev = sentinel.prev.prev;
+        sentinel.prev.next = sentinel;
         size--;
         return removedValue;
     }

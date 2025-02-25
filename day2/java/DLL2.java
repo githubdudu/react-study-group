@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
  */
 public class DLL2<V> implements List2<V> {
     private int size;
-    private Node tail;
 
     private class Node {
         public V item;
@@ -32,7 +31,6 @@ public class DLL2<V> implements List2<V> {
     public DLL2() {
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
-        tail = sentinel;
         size = 0;
     }
 
@@ -61,10 +59,9 @@ public class DLL2<V> implements List2<V> {
     @Override
     public void addLast(V item) {
         // TODO: make this method as efficient as possible
-        Node newNode = new Node(item, tail, sentinel);
+        Node newNode = new Node(item, sentinel.prev, sentinel);
         sentinel.prev = newNode;
-        tail.next = newNode;
-        tail = newNode;
+        sentinel.prev.next = newNode;
         size++;
     }
 
@@ -93,7 +90,7 @@ public class DLL2<V> implements List2<V> {
         if (isEmpty()) {
             throw new NoSuchElementException("List is empty");
         }
-        return tail.item;
+        return sentinel.prev.item;
     }
 
     @Override
@@ -126,10 +123,9 @@ public class DLL2<V> implements List2<V> {
             throw new NoSuchElementException("List is empty");
         }
 
-        V removedItem = tail.item;
-        tail = tail.prev;
-        tail.next = sentinel;
-        sentinel.prev = tail;
+        V removedItem = sentinel.prev.item;
+        sentinel.prev = sentinel.prev.prev;
+        sentinel.prev.next = sentinel;
         size--;
         return removedItem;
     }
