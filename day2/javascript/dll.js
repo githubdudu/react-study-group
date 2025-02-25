@@ -36,6 +36,7 @@ class DLL {
 
     addLast(value) {
         // TODO
+        this.add(this.size,value);
     }
 
     get(index) {
@@ -57,6 +58,7 @@ class DLL {
 
     getLast() {
         // TODO
+        return this.sentinel.prev.value;
     }
 
     remove(index) {
@@ -81,9 +83,18 @@ class DLL {
 
     removeLast() {
         // TODO
+        let lastNode = this.sentinel.prev;
+        let removedValue = lastNode.value;
+
+        lastNode.prev.next = this.sentinel;
+        this.sentinel.prev = lastNode.prev;
+        this.size--;
+
+        return removedValue;
     }
 
     size() {
+        console.log("Print size");
         return this.size;
     }
 
@@ -134,7 +145,7 @@ const arr = [1, 2, 3, 4, 5];
 const dll = DLL.arrayToDLL(arr);
 console.log(dll.toString());
 
-console.log(dll.size());
+console.log(dll.size);
 console.log(dll.isEmpty());
 
 console.log(dll.indexOf(3));
