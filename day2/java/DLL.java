@@ -59,6 +59,10 @@ public class DLL implements List {
     @Override
     public void addLast(int value) {
         // TODO: make this method as efficient as possible
+        Node newNode = new Node(value, sentinel.prev, sentinel);
+        sentinel.prev.next = newNode;
+        sentinel.prev = newNode;
+        size++;
     }
 
     @Override
@@ -83,7 +87,7 @@ public class DLL implements List {
     @Override
     public int getLast() {
         // TODO: This is not efficient, rewrite this and make it efficient
-        return get(size - 1);
+        return sentinel.prev.value;
     }
 
     @Override
@@ -113,7 +117,11 @@ public class DLL implements List {
     @Override
     public int removeLast() {
         // TODO: This is not efficient, rewrite this and make it efficient
-        return remove(size - 1);
+        int removedValue = sentinel.prev.value;
+        sentinel.prev.prev.next = sentinel;
+        sentinel.prev = sentinel.prev.prev;
+        size--;
+        return removedValue;
     }
 
     @Override
@@ -129,13 +137,20 @@ public class DLL implements List {
     @Override
     public int indexOf(int value) {
         // TODO: Implement this method
+        Node current = sentinel.next;
+        for (int i = 0; i < size; i++) {
+            if (current.value == value) {
+                return i;
+            }
+            current = current.next;
+        }
         return -1;
     }
 
     @Override
     public boolean contains(int value) {
         // TODO: Implement this method
-        return false;
+        return indexOf(value) != -1;
     }
 
     @Override
@@ -168,31 +183,37 @@ public class DLL implements List {
         DLL dll = ArrayToDLL(arr);
         System.out.println(dll);
 
-        System.out.println(dll.size());
-        System.out.println(dll.isEmpty());
+        System.out.println("dll.size(): "+ dll.size());
+        System.out.println("dll.isEmpty(): " + dll.isEmpty());
 
-        System.out.println(dll.indexOf(3));
-        System.out.println(dll.contains(3));
-        System.out.println(dll.indexOf(10));
-        System.out.println(dll.contains(10));
+        System.out.println("dll.indexOf(3): " + dll.indexOf(3));
+        System.out.println("dll.contains(3): " + dll.contains(3));
+        System.out.println("dll.indexOf(10): " + dll.indexOf(10));
+        System.out.println("dll.contains(10): " + dll.contains(10));
 
+        System.out.println("10 has been added at index 2");
         dll.add(2, 10);
         System.out.println(dll);
 
+        System.out.println("20 has been added at the beginning");
         dll.addFirst(20);
         System.out.println(dll);
 
+        System.out.println("30 has been added at the end");
         dll.addLast(30);
         System.out.println(dll);
 
-        System.out.println(dll.get(2));
-        System.out.println(dll.getFirst());
-        System.out.println(dll.getLast());
+        System.out.println("dll.get(2): " + dll.get(2));
+        System.out.println("dll.getFirst(): " + dll.getFirst());
+        System.out.println("dll.getLast(): " + dll.getLast());
 
+        System.out.println("Node of index 2 has been removed");
         System.out.println(dll.remove(2));
         System.out.println(dll);
+        System.out.println("First node has been removed");
         System.out.println(dll.removeFirst());
         System.out.println(dll);
+        System.out.println("Last node has been removed");
         System.out.println(dll.removeLast());
         System.out.println(dll);
     }
