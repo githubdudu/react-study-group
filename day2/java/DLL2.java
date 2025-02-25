@@ -5,37 +5,37 @@ import java.util.NoSuchElementException;
 /*
  * Double Linked List
  */
-public class DLL implements List {
+public class DLL2<V> implements List2<V> {
     private int size;
 
     private class Node {
-        public int value;
+        public V item;
         public Node prev;
         public Node next;
 
-        public Node(int value, Node prev, Node next) {
-            this.value = value;
+        public Node(V item, Node prev, Node next) {
+            this.item = item;
             this.prev = prev;
             this.next = next;
         }
 
         public Node() {
-            this(0, null, null);
+            this(null, null, null);
         }
     }
 
     // Critical to have a sentinel node
     // can set any value other than -1
-    private Node sentinel = new Node(-1, null, null);
+    private Node sentinel = new Node(null, null, null);
 
-    public DLL() {
+    public DLL2() {
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
     }
 
     @Override
-    public void add(int index, int value) {
+    public void add(int index, V item) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
@@ -45,28 +45,28 @@ public class DLL implements List {
             current = current.next;
         }
 
-        Node newNode = new Node(value, current, current.next);
+        Node newNode = new Node(item, current, current.next);
         current.next.prev = newNode;
         current.next = newNode;
         size++;
     }
 
     @Override
-    public void addFirst(int value) {
-        add(0, value);
+    public void addFirst(V item) {
+        add(0, item);
     }
 
     @Override
-    public void addLast(int value) {
+    public void addLast(V item) {
         // TODO: make this method as efficient as possible
-        Node newNode = new Node(value, sentinel.prev, sentinel);
-        sentinel.prev.next = newNode;
+        Node newNode = new Node(item, sentinel.prev, sentinel);
         sentinel.prev = newNode;
+        sentinel.prev.next = newNode;
         size++;
     }
 
     @Override
-    public int get(int index) {
+    public V get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
@@ -76,25 +76,25 @@ public class DLL implements List {
             current = current.next;
         }
 
-        return current.value;
+        return current.item;
     }
 
     @Override
-    public int getFirst() {
+    public V getFirst() {
         return get(0);
     }
 
     @Override
-    public int getLast() {
+    public V getLast() {
         // TODO: This is not efficient, rewrite this and make it efficient
         if (isEmpty()) {
             throw new NoSuchElementException("List is empty");
         }
-        return sentinel.prev.value;
+        return sentinel.prev.item;
     }
 
     @Override
-    public int remove(int index) {
+    public V remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");
         }
@@ -104,30 +104,30 @@ public class DLL implements List {
             current = current.next;
         }
 
-        int removedValue = current.value;
+        V removedItem = current.item;
         current.prev.next = current.next;
         current.next.prev = current.prev;
         size--;
-        return removedValue;
+        return removedItem;
     }
 
     @Override
-    public int removeFirst() {
+    public V removeFirst() {
         return remove(0);
     }
 
     @Override
-    public int removeLast() {
+    public V removeLast() {
         // TODO: This is not efficient, rewrite this and make it efficient
         if (isEmpty()) {
             throw new NoSuchElementException("List is empty");
         }
 
-        int removedValue = sentinel.prev.value;
+        V removedItem = sentinel.prev.item;
         sentinel.prev = sentinel.prev.prev;
         sentinel.prev.next = sentinel;
         size--;
-        return removedValue;
+        return removedItem;
     }
 
     @Override
@@ -141,14 +141,13 @@ public class DLL implements List {
     }
 
     @Override
-    public int indexOf(int value) {
+    public int indexOf(V item) {
         // TODO: Implement this method
-
         Node current = sentinel.next;
         int index = 0;
 
         while (current != sentinel) {
-            if (current.value == value) {
+            if (current.item == item) {
                 return index;
             }
             current = current.next;
@@ -159,18 +158,17 @@ public class DLL implements List {
     }
 
     @Override
-    public boolean contains(int value) {
+    public boolean contains(V item) {
         // TODO: Implement this method
 
         Node current = sentinel.next;
 
         while (current != sentinel) {
-            if (current.value == value) {
+            if (current.item == item) {
                 return true;
             }
             current = current.next;
         }
-
         return false;
     }
 
@@ -180,7 +178,7 @@ public class DLL implements List {
         sb.append("[");
         Node current = sentinel.next;
         while (current != sentinel) {
-            sb.append(current.value);
+            sb.append(current.item);
             if (current.next != sentinel) {
                 sb.append(", ");
             }
