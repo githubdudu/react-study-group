@@ -157,11 +157,6 @@ public class DLL2 implements List2 {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         DLL2.Node current = sentinel.next;
-
-        if (current == null) {
-            return "Null";
-        }
-
         while (current != sentinel) {
             sb.append(current.item);
             if (current.next != sentinel) {
