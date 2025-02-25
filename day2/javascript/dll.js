@@ -35,7 +35,10 @@ class DLL {
     }
 
     addLast(value) {
-        // TODO
+        const newNode = new Node(value, this.sentinel.prev, this.sentinel);
+        this.sentinel.prev.next = newNode;
+        this.sentinel.prev = newNode;
+        this.size++;
     }
 
     get(index) {
@@ -56,7 +59,7 @@ class DLL {
     }
 
     getLast() {
-        // TODO
+        return this.sentinel.prev.value;
     }
 
     remove(index) {
@@ -80,10 +83,14 @@ class DLL {
     }
 
     removeLast() {
-        // TODO
+        const removedValue = this.sentinel.prev.value;
+        this.sentinel.prev.prev.next = this.sentinel;
+        this.sentinel.prev = this.sentinel.prev.prev;
+        this.size--;
+        return removedValue;
     }
 
-    size() {
+    length() {
         return this.size;
     }
 
@@ -134,7 +141,7 @@ const arr = [1, 2, 3, 4, 5];
 const dll = DLL.arrayToDLL(arr);
 console.log(dll.toString());
 
-console.log(dll.size());
+console.log(dll.length());
 console.log(dll.isEmpty());
 
 console.log(dll.indexOf(3));
