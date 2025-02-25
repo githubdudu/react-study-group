@@ -36,10 +36,9 @@ class DLL {
 
   addLast(value) {
     // TODO
-    let current = this.sentinel;
-    const newNode = new Node(value, current.prev, current);
-    current.prev.next = newNode;
-    current.prev = newNode;
+    const newNode = new Node(value, this.sentinel.prev, this.sentinel);
+    this.sentinel.prev.next = newNode;
+    this.sentinel.prev = newNode;
     this.size++;
   }
 
@@ -64,6 +63,7 @@ class DLL {
     // TODO
     if (this.isEmpty()) {
     }
+
     return this.sentinel.prev.value;
   }
 
@@ -80,6 +80,7 @@ class DLL {
     current.prev.next = current.next;
     current.next.prev = current.prev;
     this.size--;
+
     return current.value;
   }
 
@@ -89,6 +90,12 @@ class DLL {
 
   removeLast() {
     // TODO
+    const removedValue = this.sentinel.prev.value;
+    this.sentinel.prev = this.sentinel.prev.prev;
+    this.sentinel.prev.next = this.sentinel;
+    this.size--;
+
+    return removedValue;
   }
 
   size() {
