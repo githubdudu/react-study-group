@@ -1,0 +1,78 @@
+import { SLLNode, printSLL, createSingleLL456, createSingleLL123 } from "./combineTwoSingleLL.js";
+
+/**
+ * Merges two single linked lists into one sorted single linked list.
+ * 
+ * The head1 and head2 are refer to the first node of each list, not the list itself.
+ * Helper methods printSLL are provided to print the single linked list.
+ * 
+ * Start with the first node of the first list, and then the first node of the second list.
+ * Pick up the node from each list in turn, and link the node to the new list. 
+ * 
+ * If one list is longer than the other, the remaining nodes should be linked to the new list.
+ * 
+ * For example:
+ * 1->2->3->4->5->6->7 ->null
+ * 8->9->10->null
+ * 
+ * result: 1->8->2->9->3->10->4->5->6->7->null
+ * 
+ * 1->2->3->null
+ * 4->5->6->7->8->9->10->null
+ * result: 1->4->2->5->3->6->7->8->9->10->null
+ * 
+ * 1->2->3->null
+ * null
+ * result: 1->2->3->null
+ * 
+ * null
+ * null
+ * result: null
+ * @param {SLLNode} head1 the head of the first single linked list
+ * @param {SLLNode} head2 the head of the second single linked list
+ */
+function merge(head1, head2) {
+  // TODO
+  console.log("in merge");
+  if (head1 === null) {
+    return head2;
+  }
+
+  if (head2 === null) {
+    return head1;
+  }
+
+  if (head1 === null && head2 === null) {
+    return null;
+  }
+
+  let current1 = head1;
+  let current2 = head2;
+
+  let current = head1;
+  while (current1.next !== null) {
+
+  }
+
+
+  return current;
+
+
+
+  return current1; // change this line
+}
+
+// printSLL(merge(new SLLNode(1, new SLLNode(2, new SLLNode(3))), new SLLNode(4, new SLLNode(5, new SLLNode(6, new SLLNode(7, new SLLNode(8)))))));
+
+// you may want to add more test cases to test your implementation
+
+const head1 = createSingleLL123();
+const head2 = createSingleLL456();
+const head3 = null; // null, an empty list
+const head4 = null; // null, an empty list
+
+printSLL(head1) // 1 -> 2 -> 3 -> null
+printSLL(head2)  // 4 -> 5 -> 6 -> null
+
+printSLL(merge(head1, head2));
+
