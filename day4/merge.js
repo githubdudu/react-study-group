@@ -33,7 +33,6 @@ import { SLLNode, printSLL, createSingleLL456, createSingleLL123 } from "./combi
  */
 function merge(head1, head2) {
   // TODO
-  console.log("in merge");
   if (head1 === null) {
     return head2;
   }
@@ -50,19 +49,28 @@ function merge(head1, head2) {
   let current2 = head2;
 
   let current = head1;
-  while (current1.next !== null) {
+  current1 = current1.next;
 
+  while (current1 !== null && current2 !== null) {
+    current.next = current2;
+    current = current2;
+    current2 = current2.next;
+
+    current.next = current1;
+    current = current1;
+    current1 = current1.next;
   }
 
+  if (current1 !== null) {
+    head1.next = current1;
+  } else if (current2 !== null) {
+    current.next = current2;
+  }
 
-  return current;
-
-
-
-  return current1; // change this line
+  return head1;// change this line
 }
 
-// printSLL(merge(new SLLNode(1, new SLLNode(2, new SLLNode(3))), new SLLNode(4, new SLLNode(5, new SLLNode(6, new SLLNode(7, new SLLNode(8)))))));
+printSLL(merge(new SLLNode(1, new SLLNode(2, new SLLNode(3))), new SLLNode(4, new SLLNode(5, new SLLNode(6, new SLLNode(7, new SLLNode(8)))))));
 
 // you may want to add more test cases to test your implementation
 
